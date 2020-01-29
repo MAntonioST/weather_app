@@ -54,22 +54,29 @@ function pegarLocalUsuario(lat , long){
 ///pegarLocalUsuario(-23.490394,-46.152197);
 
 function pegarCoordenadasDoIP(){
-    //http://www.geoplugin.net/json.gp
+    var lat_padrao = -22.981361; // essas variaveis é para o caso se der erro
+    var long_padrao = -43.223176;
 
     $.ajax({
         url: "http://www.geoplugin.net/json.gp",
         type: 'GET',
         dataType: 'json',
         success: function (data) {
-
-           console.log(data);
+              
+        if(data.geoplugin_latitude && data.geoplugin_longitude){
+            pegarLocalUsuario(data.geoplugin_latitude,data.geoplugin_longitude);
+        }else{
+            pegarLocalUsuario(lat_padrao,long_padrao);
+        }
+           
         },
         error: function () {
             console.log("Erro");
+            pegarLocalUsuario(lat_padrao,long_padrao);
         }
 
     });
 }
-
+pegarCoordenadasDoIP();
 
 }); //fechamento da função principal "$(function()"
