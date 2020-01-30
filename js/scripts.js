@@ -31,12 +31,49 @@ $(function () {
 
     }
 
+    function gerarGrafico(horas,temperaturas){
+        
+        Highcharts.chart('hourly_chart', {
+            chart: {
+                type: 'line'
+            },
+            title: {
+                text: 'Temperatura Hora a Hora'
+            },
+            
+            xAxis: {
+                categories:['21h','22h','23h','24h','01h','02h','03h','04h','05h','06h','07h','08h']
+            },
+            yAxis: {
+                title: {
+                    text: 'Temperature (°C)'
+                }
+            },
+            plotOptions: {
+                line: {
+                    dataLabels: {
+                        enabled: false
+                    },
+                    enableMouseTracking: false
+                }
+            },
+            series: [{
+               showInLegend: false,
+                data: [7.0, 6.9, 9.5, 14.5, 18.4, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6]
+        
+            }]
+        });
+    }
+
+    gerarGrafico();
+
     function preencherPrevisao5Dias(previsoes) {
 
         $("#info_5dias").html("");
         var diasSemana =["Domingo", "Segunda-feira", "Terça-feira", "Quarta-feira", "Quinta-feira", "Sexta-feira", "Sábado"];
 
         for(var i = 0; i < previsoes.length; i++){
+
             var dataHoje = new Date(previsoes[i].Date);
             var dia_semana = diasSemana[ dataHoje.getDay() ];
 
@@ -174,6 +211,6 @@ function pegarCoordenadasDoIP(){
 
     });
 }
-pegarCoordenadasDoIP();
+//pegarCoordenadasDoIP();
 
 }); //fechamento da função principal "$(function()"
