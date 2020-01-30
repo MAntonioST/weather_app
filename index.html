@@ -13,6 +13,8 @@
 
     <body>
 
+        <div id="aviso-erro"></div>
+
         <div id="page-loader" class="refresh-loader">
             <div class="table">
                 <div class="table-cell">
@@ -54,22 +56,22 @@
                     
                     <div class="row">
                         <div id="texto_local" class="city_name col-sm-12">
-                          xxxx
+                            <!-- Rio de Janeiro, Rio de janeiro. Brasil -->
                         </div>
                         <div id="texto_clima" class="weather_result col-sm-12">
-                            xxxx
+                            <!--  Ensolarado -->
                         </div>
                     </div>
 
                     <div class="row">
-                        <div id="icone_clima" class="weather_icon" style="background-image: url('https://developer.accuweather.com/sites/default/files/01-s.png');">
+                        <div id="icone_clima" class="weather_icon" style="background-image: url('');">
     
                         </div>
                         <div class="temperature">
                             <div class="row">
-                                <div id="texto_temperatura" class="temp_value col-sm-12">XX&deg;</div>
+                                <div id="texto_temperatura" class="temp_value col-sm-12"><!-- 26&deg; --></div>
                                 <div id="texto_max_min" class="max_min_temp">
-                                    18&deg; / 29&deg;
+                                    <!--18&deg; / 29&deg; -->
                                 </div>
 
                             </div>
@@ -85,7 +87,7 @@
                     </div>
 
                     <div id="info_5dias" class="daily_info row">
-                        
+                        <!--
                         <div class="day col">
                             <div class="day_inner">
                                 <div class="dayname">
@@ -150,7 +152,7 @@
                                     8&deg; / 16&deg;
                                 </div>
                             </div>
-                        </div>
+                        </div>-->
                         
                     </div>
 
@@ -166,6 +168,7 @@
         <script src="js/vendor/jquery.js"></script>
         <script src="js/scripts.js"></script>
         <script src="js/vendor/bootstrap.min.js"></script>
+        <script src="https://code.highcharts.com/highcharts.js"></script>
        
     </body>
 
