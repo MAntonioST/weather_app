@@ -31,6 +31,63 @@ $(function () {
 
     }
 
+    function preencherPrevisao5Dias(previsoes) {
+
+        $("#info_5dias").html("");
+        //var diasSemana =["Domingo", "Segunda-feira", "Terça-feira", "Quarta-feira", "Quinta-feira", "Sexta-feira", "Sábado"];
+
+        for(var i = 0; i < previsoes.length; i ++){
+            //var dataHoje = new Date(previsoes[i].Date);
+            var dia_semana = "dia semana";//diasSemana[ dataHoje.getDay() ];
+
+            var iconNumber = previsoes[i].Day.Icon <= 9 ? "0" + String(previsoes[i].Day.Icon) : String(previsoes[i].Day.Icon);
+     
+            iconeClima = "https://developer.accuweather.com/sites/default/files/" + iconNumber + "-s.png";
+            maxima = String(previsoes[i].Temperature.Maximum.Value);
+            minima = String(previsoes[i].Temperature.Minimum.Value);
+
+            elementoHTMLDia =  '<div class="day col">';
+            elementoHTMLDia +=    '<div class="day_inner">';
+            elementoHTMLDia +=        '<div class="dayname">';
+            elementoHTMLDia +=              dia_semana;
+            elementoHTMLDia +=        '</div>';
+            elementoHTMLDia +=        '<div style="background-image: url(\'' + iconeClima + '\')" class="daily_weather_icon"></div>'   
+            elementoHTMLDia +=        '<div class="max_min_temp">';
+            elementoHTMLDia +=          minima + '&deg; / ' + maxima + '&deg;';    
+            elementoHTMLDia +=        '</div>';
+            elementoHTMLDia +=    '</div>';    
+            elementoHTMLDia += '</div>';       
+                
+            $("#info_5dias").append(elementoHTMLDia);
+            elementoHTMLDia = "";
+        
+        }
+
+    }
+
+    function pegarPrevisao5Dias(localCode) {
+    
+        $.ajax({
+            url : "http://dataservice.accuweather.com/forecasts/v1/daily/5day/" + localCode + "?apikey=" + accuweatherAPIKey + "&language=pt-br&metric=true",
+            type: "GET",
+            dataType: "json",
+            success: function(data){
+                // console.log("5 day forecast: ", data);
+
+                $("#texto_max_min").html( String(data.DailyForecasts[0].Temperature.Minimum.Value) + "&deg; / " + String(data.DailyForecasts[0].Temperature.Maximum.Value) + "&deg;");
+                
+                preencherPrevisao5Dias(data.DailyForecasts);
+            },
+            error: function(){
+                console.log("Erro");
+                gerarErro("Erro ao obter a previsão de 5 dias");
+            
+            }  
+        });
+    
+    }
+
+
 
     //função para pegar o tempo atual
     function pegarTempoAtual(localCode) {
@@ -81,6 +138,7 @@ function pegarLocalUsuario(lat , long){
 
            var localCode = data.Key;
            pegarTempoAtual(localCode);
+           pegarPrevisao5Dias(localCode);
         },
         error: function () {
             console.log("Erro");
