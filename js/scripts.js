@@ -34,11 +34,11 @@ $(function () {
     function preencherPrevisao5Dias(previsoes) {
 
         $("#info_5dias").html("");
-        //var diasSemana =["Domingo", "Segunda-feira", "Terça-feira", "Quarta-feira", "Quinta-feira", "Sexta-feira", "Sábado"];
+        var diasSemana =["Domingo", "Segunda-feira", "Terça-feira", "Quarta-feira", "Quinta-feira", "Sexta-feira", "Sábado"];
 
-        for(var i = 0; i < previsoes.length; i ++){
-            //var dataHoje = new Date(previsoes[i].Date);
-            var dia_semana = "dia semana";//diasSemana[ dataHoje.getDay() ];
+        for(var i = 0; i < previsoes.length; i++){
+            var dataHoje = new Date(previsoes[i].Date);
+            var dia_semana = diasSemana[ dataHoje.getDay() ];
 
             var iconNumber = previsoes[i].Day.Icon <= 9 ? "0" + String(previsoes[i].Day.Icon) : String(previsoes[i].Day.Icon);
      
@@ -72,7 +72,7 @@ $(function () {
             type: "GET",
             dataType: "json",
             success: function(data){
-                // console.log("5 day forecast: ", data);
+               console.log("5 day forecast: ", data);
 
                 $("#texto_max_min").html( String(data.DailyForecasts[0].Temperature.Minimum.Value) + "&deg; / " + String(data.DailyForecasts[0].Temperature.Maximum.Value) + "&deg;");
                 
