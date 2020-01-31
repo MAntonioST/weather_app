@@ -36,7 +36,7 @@ body.loading {
 
 
 .refresh-loader {
-    display: none;
+   /* display: none;*/
     z-index: 999;           
     position: fixed;
     top: 0;

@@ -91,12 +91,13 @@ $(function () {
                     temperaturas.push( data[i].Temperature.Value );
                     
                     gerarGrafico(horarios, temperaturas);
-                   // $('.refresh-loader').fadeOut();
+                    $('.refresh-loader').fadeOut();
                 }
             },
             error: function () {
                 console.log("Erro");
                 gerarErro("Erro ao obter a hora");
+                $('.refresh-loader').fadeOut();
 
             }
         });
@@ -155,6 +156,7 @@ $(function () {
             error: function () {
                 console.log("Erro");
                 gerarErro("Erro ao obter a previsão de 5 dias");
+                $('.refresh-loader').fadeOut();
 
             }
         });
@@ -184,6 +186,7 @@ $(function () {
             },
             error: function () {
                 console.log("Erro");
+                $('.refresh-loader').fadeOut();
             }
 
         });
@@ -217,6 +220,7 @@ $(function () {
             },
             error: function () {
                 console.log("Erro");
+                $('.refresh-loader').fadeOut();
             }
 
         });
@@ -231,11 +235,18 @@ $(function () {
             type: 'GET',
             dataType: 'json',
             success: function (data) {
-                console.log("mapbox :", data);
-
+                //console.log("mapbox :", data);
+                try {
+                    var long = data.features[0].geometry.coordinates[0];
+                    var lat = data.features[0].geometry.coordinates[1];
+                    pegarLocalUsuario(lat, long);
+                } catch {
+                    gerarErro("Erro na pesquisa de local");
+                }
             },
             error: function () {
-                console.log("Erro");
+                console.log("Erro no Mapbox");
+                $('.refresh-loader').fadeOut();
             }
 
         });
@@ -266,6 +277,31 @@ $(function () {
 
         });
     }
+
     pegarCoordenadasDoIP();
+
+    $("#search-button").click(function(){
+        $('.refresh-loader').show();
+        var local = $("input#local").val();
+        if (local) {
+            pegarCoordenadasDaPesquisa(local);
+        } else {
+            alert('Local inválido');
+        }
+    });
+
+    $("input#local").on('keypress', function(e){
+        
+        if(e.which == 13) {
+            $('.refresh-loader').show();
+            var local = $("input#local").val();
+            if (local) {
+                pegarCoordenadasDaPesquisa(local);
+            } else {
+                alert('Local inválido');
+            }
+        }
+        
+    });
 
 }); //fechamento da função principal "$(function()"
