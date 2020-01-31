@@ -11,6 +11,10 @@ $(function () {
 
     //variavel global chave,para usar em todas as urls do sitema, para acessar os dados necessários
     var accuweatherAPIKey = "V4A79CBsIx2A7AoAg7awgq3O0eOLmIB5";
+    var mapboxToken = "pk.eyJ1IjoibWFyY29hbnRvbmlvdGVpeGVpcmEiLCJhIjoiY2s2MjN1M2c2MGFoaTNqcDY2djljZTNqNCJ9.hqW7WULD0P7PzZpYCxQ0Gg";
+
+
+
     //objeto criado para não ter que passar sempre cidade, estado e pais 
     var weatherObject = {
         cidade: "",
@@ -219,7 +223,24 @@ $(function () {
 
     }
 
-    //pegarLocalUsuario(-23.490394,-46.152197);
+    function pegarCoordenadasDaPesquisa(input) {
+       
+       input = encodeURI("input");
+        $.ajax({
+            url: "https://api.mapbox.com/geocoding/v5/mapbox.places/"+ input +".json?access_token="+ mapboxToken,
+            type: 'GET',
+            dataType: 'json',
+            success: function (data) {
+                console.log("mapbox :", data);
+
+            },
+            error: function () {
+                console.log("Erro");
+            }
+
+        });
+
+    }
 
     function pegarCoordenadasDoIP() {
         var lat_padrao = -22.981361; // essas variaveis é para o caso se der erro
